@@ -1,0 +1,20 @@
+apiVersion: apps/v1beta2
+kind: ReplicaSet
+metadata:
+  name: restjersey-rs
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: restjersey
+  template:
+    metadata:
+      labels: 
+        app: restjersey
+    spec:
+      containers:
+      - name: restjersey-container
+        image: restjersey:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
