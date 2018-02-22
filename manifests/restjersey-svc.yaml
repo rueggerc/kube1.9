@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: restjersey-svc
+  labels:
+    app: restjersey
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector: 
+    app: restjersey
