@@ -1,0 +1,16 @@
+
+# List Services
+kubectl get svc
+
+# Get Service Details
+kubectl describe svc hello-svc
+
+Service 
+ClusterIP	Available Inside Cluster
+NodePort      	Available Outside Cluster on Every node
+
+http://godzilla:30084/restful-jersey/rest/books/books
+http://oscar:30084/restful-jersey/rest/books/books
+http://darwin:30084/restful-jersey/rest/books/books
+
+
