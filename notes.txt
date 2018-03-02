@@ -1,6 +1,13 @@
 
+# List ReplicaSets
 # List Services
+# List DaemonSets
+kubectl get rs
 kubectl get svc
+kubectl get ds -n kube-system
+
+# Deploy 
+kubectl create -f rs.yaml
 
 # Get Service Details
 kubectl describe svc hello-svc
@@ -12,5 +19,51 @@ NodePort      	Available Outside Cluster on Every node
 http://godzilla:30084/restful-jersey/rest/books/books
 http://oscar:30084/restful-jersey/rest/books/books
 http://darwin:30084/restful-jersey/rest/books/books
+
+
+# Get Details on DaemonSet
+kubectl -n kube-system describe pod fluentd-kv9wf
+journalctl -u kubelet
+
+
+
+# Delete DaemonSet
+kubectl -n kube-system delete ds fluentd
+
+
+FLUENTD DaemonSet
+----------------
+CrashLoopBackoff
+
+
+========================================================================================
+[hadoop@captain ~]$ kubectl -n kube-system logs fluentd-gl7j2
+2018-03-02 07:53:13 +0000 [info]: parsing config file is succeeded path="/fluentd/etc/fluent.conf"
+2018-03-02 07:53:13 +0000 [warn]: 'type' is deprecated parameter name. use '@type' instead.
+2018-03-02 07:53:13 +0000 [warn]: 'type' is deprecated parameter name. use '@type' instead.
+2018-03-02 07:53:14 +0000 [warn]: 'type' is deprecated parameter name. use '@type' instead.
+2018-03-02 07:53:14 +0000 [error]: config error file="/fluentd/etc/fluent.conf" error_class=Fluent::ConfigError error="Exception encountered fetching metadata from Kubernetes API endpoint: pods is forbidden: User \"system:serviceaccount:kube-system:default\" cannot list pods at the cluster scope ({\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Failure\",\"message\":\"pods is forbidden: User \\\"system:serviceaccount:kube-system:default\\\" cannot list pods at the cluster scope\",\"reason\":\"Forbidden\",\"details\":{\"kind\":\"pods\"},\"code\":403}\n)"
+========================================================================================
+
+kubectl -n kube-system logs  fluentd-p5jfq 
+2018-03-02 07:58:25 +0000 [info]: parsing config file is succeeded path="/fluentd/etc/fluent.conf"
+2018-03-02 07:58:25 +0000 [warn]: 'type' is deprecated parameter name. use '@type' instead.
+2018-03-02 07:58:25 +0000 [warn]: 'type' is deprecated parameter name. use '@type' instead.
+2018-03-02 07:58:25 +0000 [warn]: 'type' is deprecated parameter name. use '@type' instead.
+2018-03-02 07:58:25 +0000 [error]: config error file="/fluentd/etc/fluent.conf" error_class=Fluent::ConfigError error="start_namespace_watch: Exception encountered setting up namespace watch from Kubernetes API v1 endpoint https://10.96.0.1:443/api: namespaces is forbidden: User \"system:serviceaccount:kube-system:default\" cannot list namespaces at the cluster scope ({\"kind\":\"Status\",\"apiVersion\":\"v1\",\"metadata\":{},\"status\":\"Failure\",\"message\":\"namespaces is forbidden: User \\\"system:serviceaccount:kube-system:default\\\" cannot list namespaces at the cluster scope\",\"reason\":\"Forbidden\",\"details\":{\"kind\":\"namespaces\"},\"code\":403}\n)"
+
+
+
+
+
+GIT
+====================================
+sudo yum install curl-devel
+Download/unpack Git source
+cd git-2.14.1
+make configure
+./configure --prefix=/usr/local
+sudo make install
+
 
 
