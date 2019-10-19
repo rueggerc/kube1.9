@@ -1,0 +1,14 @@
+Links
+---------------------
+https://medium.com/nycdev/k8s-on-pi-9cc14843d43
+http://geekswithblogs.net/alexhildyard/archive/2017/10/12/installing-a-kubernetes-cluster-on-centos-7.aspx
+https://raspberrypi.stackexchange.com/questions/84390/how-to-permanently-disable-swap-on-raspbian-stretch-lite
+https://stackoverflow.com/questions/42564058/how-to-use-local-docker-images-with-minikube
+http://work.haufegroup.io/log-aggregation/
+
+https://kubernetes.io/docs/reference/access-authn-authz/authentication/
+https://kubernetes.io/
+https://github.com/kubernetes/dashboard/blob/master/README.md
+https://www.digitalocean.com/community/tutorials/elasticsearch-fluentd-and-kibana-open-source-log-search-and-visualization
+https://docs.fluentd.org/how-to-guides/free-alternative-to-splunk-by-fluentd
+https://github.com/kubernetes/dashboard/issues/2034
