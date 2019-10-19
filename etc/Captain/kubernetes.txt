@@ -1,0 +1,30 @@
+Inspect
+-------
+kubectl get pods --all-namespaces
+kubectl version
+kubectl -n kube-system get secret
+kubectl get nodes -o wide
+kubectl describe pod --namespace=kube-system | more
+
+Deploy
+------
+
+Dashboard
+---------
+kubectl proxy
+kubectl proxy --help
+http://localhost:8001/ui
+
+
+Docker
+------
+docker run hello-world
+docker run -it ubuntu bash
+
+
+Logs
+----
+kubectl get pods
+kubectl log restjersey-rs-42s6s 
+
+

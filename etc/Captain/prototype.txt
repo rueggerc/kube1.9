@@ -1,0 +1,64 @@
+Stand Up Prototype
+-----------------
+
+=========================================================================
+Docker
+========================================================================
+
+# Build Image
+cd code/restful-jersey
+docker image build -t restjersey:latest .
+docker image ls | grep restjersey
+
+# Inspect Images
+docker image ls
+docker images
+docker ps -a
+docker image inspect tomcat:8.0.47-jre8
+docker image inspect restjersey:latest
+
+
+# Run docker hello-world
+docker run hello-world
+docker run -it ubuntu bash
+
+# Run Multiple Instances of Image:
+docker container run -d --name restjersey1 -p 8080:8080 restjersey:latest
+docker container run -d --name restjersey1 -p 8088:8080 restjersey:latest
+docker container run -d --name restjersey2 -p 8089:8080 restjersey:latest
+
+# Container Stop, Start, Remove
+docker container stop <id or name>
+docker container stop rest2
+docker container start rest2
+
+# Remove Image
+docker container rm <id or name>
+docker container rmi <id or name>
+
+# Access App
+http://localhost:8088/restful-jersey/rest/books/books
+
+# Attach
+docker container exec -it restjersey1 bash
+
+# Run Interactive
+docker container run -it --name rest1 -p 8080:8080 restjersey:latest
+docker container run -it restjersey:latest /bin/bash
+
+# Inspect Running Containers
+docker container ls
+
+# Inspect All Containers
+docker ps -a
+
+# Remove Exited Containers
+docker rm $(docker ps -a -q -f status=exited)
+
+
+=========================================================================
+Kubernetes
+========================================================================
+
+
+

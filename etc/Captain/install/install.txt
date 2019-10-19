@@ -1,0 +1,185 @@
+
+Master 
+======
+Control Plane
+API Server
+	POST Manifest Files (YAML or JSON)
+	Port 443
+Cluster Store
+	based on etcd
+Controller Manager
+Scheduler (kube-scheduler)
+
+
+
+Nodes (minions)
+================
+Kubelet (agent)
+container Runtime
+	Docker Remote API (containerd)
+	CRI Container Runtime Interface
+Network Proxy (Kube-Proxy) 
+	IP Address assignment, load balancing
+
+
+
+Pods
+=====
+Unit of deployment
+Usually one container per Pod
+
+Mutlti-Conatiner Pod when tightly coupled/support containers
+Containers in Pods share:
+	IP Address
+	shared memory
+	IPC namespace
+	volumes
+	network stack
+
+
+Replica Sets
+Services
+	Uses Labels to know which Pods to Load Balance across
+Deployments
+	Built on top of Replicate Sets
+	Blue/Green
+	Canary
+	Rolling Updates/Rollback
+
+
+
+INSTALLATION
+==========================================================================================================================================
+
+DOCKER
+
+CENTOS
+-------
+sudo yum list docker-ce --showduplicates | sort -r | grep 17.03
+
+# Gives obsolete errors
+sudo yum install docker-ce-17.03.2.ce
+
+# Works
+sudo yum install docker-ce-17.06.2.ce
+
+
+# List version installed
+sudo rpm -qa | grep docker
+
+# Add user to docker group
+sudo usermod -aG docker $USER
+
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo docker run hello-world
+sudo docker run -it ubuntu bash
+
+# Reinstall
+rm /var/lib/docker
+sudo yum remove docker docker-common docker-selinux docker-engine
+
+
+UBUNTU
+-------
+sudo apt-cache policy docker-ce
+sudo apt-get install docker-ce=17.06.2~ce-0~ubuntu
+
+
+
+KUBEADM INIT
+==============================================================
+
+#TO try install again after fail:
+kubeadm reset
+
+#Restart docker
+sudo systemctl restart docker
+
+sudo systemctl restart kubelet
+
+#Debug kublet
+sudo journalctl -xeu kubelet
+
+
+# CLUSTER SETUP 
+swapoff -a
+service kubelet stop
+rm -rf /var/lib/kubelet/pki
+
+#On Master:
+sudo sysctl net.bridge.bridge-nf-call-iptables=1
+
+
+# Check Cluster Init
+export KUBECONFIG=/home/hadoop/.kube/config
+sudo kubectl get nodes
+
+# Install POD Network
+#https://github.com/kubernetes/kubernetes/issues/54910
+export kubever=$(kubectl version | base64 | tr -d '\n')
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
+kubectl get pods --all-namespaces
+
+############################################################################################
+cat << EOF > /etc/docker/daemon.json
+{
+  "exec-opts": ["native.cgroupdriver=cgroupfs"]
+}
+EOF
+Set kubelet use cgroupfs too:
+$ vi /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+
+# ADDING OSCAR TO CLUSTER
+sudo kubeadm token create --print-join-command
+edit /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=cgroupfs"
+
+
+Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=cgroupfs"
+Reload daemon setting then restart kubelet and docker
+systemctl daemon-reload && systemctl restart kubelet docker
+#############################################################################################
+
+# Commands
+kubectl version
+kubectl get pods --all-namespaces
+
+# INSTALL WEAVENET
+
+# CLUSTER SETUP
+
+# DASHBOARD
+===============================================================================================
+kubectl proxy
+kubectl proxy --help
+
+http://localhost:8001/ui
+
+
+Useful Commands
+====================
+kubectl -n kube-system get secret
+kubectl get nodes -o wide
+kubectl describe pod --namespace=kube-system | more
+
+
+kubectl get pods --all-namespaces
+NAMESPACE     NAME                                    READY     STATUS    RESTARTS   AGE
+kube-system   etcd-captain                            1/1       Running   2          23h
+kube-system   kube-apiserver-captain                  1/1       Running   2          23h
+kube-system   kube-controller-manager-captain         1/1       Running   2          23h
+kube-system   kube-dns-6f4fd4bdf-4grf9                3/3       Running   16         23h
+kube-system   kube-proxy-k7l9q                        1/1       Running   2          23h
+kube-system   kube-proxy-r8l8d                        1/1       Running   0          1h
+kube-system   kube-proxy-w8s7l                        1/1       Running   0          42m
+kube-system   kube-scheduler-captain                  1/1       Running   2          23h
+kube-system   kubernetes-dashboard-845747bdd4-7gzs4   1/1       Running   0          13h
+kube-system   weave-net-5dx7z                         2/2       Running   2          14h
+kube-system   weave-net-67xjl                         2/2       Running   0          42m
+kube-system   weave-net-79jc8                         2/2       Running   0          1h
+
+https://stackoverflow.com/questions/41566408/restart-kubernetes-api-server-with-different-options
+/etc/kubernetes/manifests
+
+https://stackoverflow.com/questions/46114378/kubernetes-dashboard-authentication-on-atomic-host
