@@ -1,0 +1,7 @@
+version: "3.3"
+services:
+  sensors:
+    image: rueggerc/sensors-rest:1.0
+    container_name: sensors
+    ports:
+      - 3000:3000

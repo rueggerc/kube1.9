@@ -1,0 +1,23 @@
+
+Get Sensor Data
+==================
+curl --request GET http://localhost:3000/sensor/pi/sensor1
+
+Save Sensor Data
+==================
+curl --request POST http://localhost:3000/sensor/pi/sensor1/78.33/91.03
+
+Health Check
+==================
+curl --request GET http://localhost:3000/sensor/health
+
+
+# Push Docker Image to DockerHub
+=================================
+docker login
+
+# Tag
+docker tag sensors-rest:latest rueggerc/sensors-rest:1.0
+
+# Push
+docker push rueggerc/sensors-rest:1.0
