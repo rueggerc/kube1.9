@@ -1,0 +1,46 @@
+
+// Main Installation Tutorial
+https://medium.com/nycdev/k8s-on-pi-9cc14843d43
+
+
+==========================================================
+Common Setup
+==========================================================
+
+// Disable SWAP
+// !!!Not permanent!!!
+sudo dphys-swapfile swapoff && \
+sudo dphys-swapfile uninstall && \
+sudo update-rc.d dphys-swapfile remove
+
+// Disable Permanently
+https://raspberrypi.stackexchange.com/questions/84390/how-to-permanently-disable-swap-on-raspbian-stretch-lite
+echo Disable SWAP
+sudo dphys-swapfile swapoff && \
+sudo dphys-swapfile uninstall && \
+sudo systemctl disable dphys-swapfile
+
+sudo swapon --summary
+
+==========================================================
+Master Setup
+==========================================================
+
+
+# Get Certificate
+kubeadm token list
+
+# Get sha hash
+
+# Install Weavenet
+
+# Check Everything Worked
+kubectl get pods --all-namespaces
+
+# Run on Master and All Workers
+sudo sysctl net.bridge.bridge-nf-call-iptables=1
+
+
+==========================================================
+Worker Nodes
+==========================================================
