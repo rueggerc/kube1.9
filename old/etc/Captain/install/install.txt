@@ -183,3 +183,13 @@ https://stackoverflow.com/questions/41566408/restart-kubernetes-api-server-with-
 /etc/kubernetes/manifests
 
 https://stackoverflow.com/questions/46114378/kubernetes-dashboard-authentication-on-atomic-host
+
+
+# dashboard
+https://github.com/kubernetes/dashboard
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
+# Deleting Dashboard
+https://stackoverflow.com/questions/40686151/kubernetes-pod-gets-recreated-when-deleted
+kubectl logs kubernetes-dashboard-7c54d59f66-g5hdh --namespace=kube-system
+kubectl delete -n kube-system deployment kubernetes-dashboard
