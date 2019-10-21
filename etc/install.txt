@@ -45,5 +45,6 @@ sudo sysctl net.bridge.bridge-nf-call-iptables=1
 Worker Nodes
 ==========================================================
 # Label Worker Nodes
+https://stackoverflow.com/questions/48854905/how-to-add-roles-to-nodes-in-kubernetes
 kubectl label node k8s-node1 node-role.kubernetes.io/worker=worker
 
