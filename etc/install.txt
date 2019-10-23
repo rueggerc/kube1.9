@@ -48,3 +48,15 @@ Worker Nodes
 https://stackoverflow.com/questions/48854905/how-to-add-roles-to-nodes-in-kubernetes
 kubectl label node k8s-node1 node-role.kubernetes.io/worker=worker
 
+
+==========================================================
+Setup Dashboard on Windows Machine
+==========================================================
+
+
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/72832429656c74c4c568ad5b7163fa9716c3e0ec/src/deploy/recommended/kubernetes-dashboard-arm.yaml
+
+
+
+
+
