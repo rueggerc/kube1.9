@@ -58,5 +58,18 @@ kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/7283242
 
 
 
+kubectl create -f kubernetes-dashboard-arm.yaml
+Error from server (AlreadyExists): error when creating "kubernetes-dashboard-arm.yaml": secrets "kubernetes-dashboard-certs" already exists
+Error from server (AlreadyExists): error when creating "kubernetes-dashboard-arm.yaml": serviceaccounts "kubernetes-dashboard" already exists
+Error from server (AlreadyExists): error when creating "kubernetes-dashboard-arm.yaml": roles.rbac.authorization.k8s.io "kubernetes-dashboard-minimal" already exists
+Error from server (AlreadyExists): error when creating "kubernetes-dashboard-arm.yaml": rolebindings.rbac.authorization.k8s.io "kubernetes-dashboard-minimal" already exists
+Error from server (AlreadyExists): error when creating "kubernetes-dashboard-arm.yaml": services "kubernetes-dashboard" already exists
+pi@k8s-master:~/code/kube1.9/manifests$ kubectl proxy
+Starting to serve on 127.0.0.1:8001
+
+http://<master IP>:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+
 
 
