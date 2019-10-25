@@ -1,14 +1,4 @@
 
-Install
-=======================================
-https://medium.com/nycdev/k8s-on-pi-9cc14843d43
-http://geekswithblogs.net/alexhildyard/archive/2017/10/12/installing-a-kubernetes-cluster-on-centos-7.aspx
-
-
-Docker
-=======================================
-https://hackernoon.com/publish-your-docker-image-to-docker-hub-10b826793faf
-https://jonathanmeier.io/install-docker-and-docker-compose-raspberry-pi/
 
 #################################
 # Commands
@@ -35,22 +25,8 @@ kubectl logs coredns-5644d7b6d9-hnz4n -n kube-system > out
 kubectl -n kube-system delete rs coredns-5d85cf8b95
 
 # Delete pod
-kubectl delete pod coredns-5644d7b6d9-sc999
+kubectl delete pod coredns-5644d7b6d9-sc999 
 
-# Get Service Accounts
-kubectl get serviceAccounts -n kube-system
-
-# Get Pods and Nodes they are in
- kubectl get pod -o=custom-columns=NODE:.spec.nodeName,NAME:.metadata.name --all-namespaces
-
-# Get All
-kubectl get all --all-namespaces
-
-# Tokens
-kubeadm token List
-
-# Get sha hash
-openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 
 #################################
 # Logs/Errors
@@ -62,3 +38,11 @@ kube-dns               ClusterIP   10.96.0.10       <none>        53/UDP,53/TCP,
 kubernetes-dashboard   ClusterIP   10.104.205.112   <none>        443/TCP                  22h
 
 
+# CoreDNS Problem
+https://github.com/kubernetes-sigs/kubespray/issues/4674
+sudo iptables -P FORWARD ACCEPT
+
+#################################
+# Dashboard
+################################
+http://192.168.254.40:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
