@@ -1,0 +1,22 @@
+https://kubecloud.io/kubernetes-dashboard-on-arm-with-rbac-61309310a640
+
+# This Worked
+# 10/24/2019
+# Download this into a yaml file
+
+https://gist.github.com/fvbock/34cf5a42a7f29451be612d3fc51350d5
+
+
+# Create Service Account for Dashboard
+kubectl create serviceaccount dashboard -n default
+kubectl create clusterrolebinding dashboard-admin -n default \
+  --clusterrole=cluster-admin \
+  --serviceaccount=default:dashboard
+
+# Get Secret to paste into Dashboard
+kubectl get secret $(kubectl get serviceaccount dashboard -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode
+
+
+
+Kubernetes on raspberry PI
+https://www.youtube.com/watch?v=aerGMzRUbqk
