@@ -62,3 +62,5 @@ kube-dns               ClusterIP   10.96.0.10       <none>        53/UDP,53/TCP,
 kubernetes-dashboard   ClusterIP   10.104.205.112   <none>        443/TCP                  22h
 
 
+
+# Delete Deployment

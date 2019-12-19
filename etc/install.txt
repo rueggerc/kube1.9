@@ -25,14 +25,33 @@ sudo swapon --summary
 ==========================================================
 Master Setup
 ==========================================================
+sudo kubeadm init --token-ttl=0
+
+# Install Weavenet
+
+# Configure IP tables
+sudo sysctl net.bridge.bridge-nf-call-iptables=1
+sudo iptables -P FORWARD ACCEPT
+
+
+# On Each Worker Node
+
+sudo kubeadm join 192.168.254.40:6443 --token tddjnr.6nwxyw6b7oaxgxvm --discovery-token-ca-cert-hash sha256:f128f7e65d7f4be2d6cd8e6a4d49bdbab477c267866bbbae8cd4baff2899e23c
+
+# To Reset:
+https://stackoverflow.com/questions/41732265/how-to-use-kubeadm-to-create-kubernetes-cluster
+sudo kubeadm reset
+sudo systemctl restart kubelet
+rm -r -f /etc/kubernetes /var/lib/kubelet /var/lib/etcd;
+
+# After apt-upgrade Upgrade
+sudo chmod 777 /etc/cni/net.d
 
 
 # Get Certificate
 kubeadm token list
 
 # Get sha hash
-
-# Install Weavenet
 
 # Check Everything Worked
 kubectl get pods --all-namespaces

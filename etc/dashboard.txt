@@ -8,15 +8,31 @@ https://gist.github.com/fvbock/34cf5a42a7f29451be612d3fc51350d5
 
 
 # Create Service Account for Dashboard
-kubectl create serviceaccount dashboard -n default
-kubectl create clusterrolebinding dashboard-admin -n default \
-  --clusterrole=cluster-admin \
-  --serviceaccount=default:dashboard
+#kubectl create serviceaccount dashboard -n default
+#kubectl create clusterrolebinding dashboard-admin -n default \
+#  --clusterrole=cluster-admin \
+#  --serviceaccount=default:dashboard
+
+
+https://www.replex.io/blog/how-to-install-access-and-add-heapster-metrics-to-the-kubernetes-dashboard
+kubectl create serviceaccount dashboard-admin-sa
+kubectl create clusterrolebinding dashboard-admin-sa --clusterrole=cluster-admin --serviceaccount=default:dashboard-admin-sa
 
 # Get Secret to paste into Dashboard
-kubectl get secret $(kubectl get serviceaccount dashboard -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode
+kubectl get secret $(kubectl get serviceaccount dashboard-admin-sa -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode
 
 
 
 Kubernetes on raspberry PI
 https://www.youtube.com/watch?v=aerGMzRUbqk
+
+
+
+
+
+
+# Login to Dashboard with token
+kubectl get secrets
+kubectl describe secret dashboard-admin-sa-token-zzsv5
+Paste token into login window
+
